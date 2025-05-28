@@ -1,9 +1,11 @@
-import React from "react";
+import React,{useState} from "react";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventdefault();
@@ -14,7 +16,7 @@ function Signup() {
         const user ={email,password};
         localStorage.setItem("user", JSON.stringify(user));
         alert("Successfully signed up, Proceed to login");
-        Navigate("/login");
+        navigate('/login');
     };
 
     return(
