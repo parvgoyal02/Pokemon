@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import Contact from './components/Contact';
-import Bookmark from './components/Bookmark';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Contact from './pages/Contact';
+import Bookmark from './pages/Bookmark';
 import PokeInfo from './components/PokeInfo';
 import Navbar from './components/Navbar';
 

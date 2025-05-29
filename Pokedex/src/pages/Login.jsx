@@ -10,14 +10,18 @@ function Login () {
 
     const handleLogin = (e) => {        
         e.preventDefault();
-        const user = JSON.parse(localStorage.getItem("user"));
-        
-        if (!user || user.email !== username || user.password !== password) {
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const user = users.find(
+            (u) => u.email === username && u.password === password
+        );
+
+        if (!user) {
             setError("Invalid username or password");
             return;
         }
         
         alert("Successfully logged in");
+        localStorage.setItem("loggedInUser", JSON.stringify(user));
         navigate('/');
         // Redirect to dashboard or another page
     }

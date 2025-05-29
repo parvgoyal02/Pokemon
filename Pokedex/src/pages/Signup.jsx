@@ -8,13 +8,14 @@ function Signup() {
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
-        e.preventdefault();
+        e.preventDefault();
         if(password !== confirmPassword) {
             alert("Passwords do not match");
             return;
         }
-        const user ={email,password};
-        localStorage.setItem("user", JSON.stringify(user));
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        users.push({ email, password });
+        localStorage.setItem("users", JSON.stringify(users));
         alert("Successfully signed up, Proceed to login");
         navigate('/login');
     };

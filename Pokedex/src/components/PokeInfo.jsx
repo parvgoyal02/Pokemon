@@ -5,16 +5,30 @@ function PokeInfo({ pokemon }) {
   const navigate = useNavigate();
 
   const handleBookmark = () => {
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    if (!loggedInUser) {
-      alert('Please sign up or log in to bookmark Pokémon.');
-      navigate('/signup');
-      return;
-    }
+  const loggedInUser = localStorage.getItem('loggedInUser');
+  if (!loggedInUser) {
+    alert('Please log in to bookmark Pokémon.');
+    navigate('/login');
+    return;
+  }
 
-    alert(`${pokemon.name} bookmarked!`);
-    // You can save to localStorage or IndexedDB here
-  };
+  const saved = JSON.parse(localStorage.getItem('bookmarkedPokemons')) || [];
+
+  const alreadyBookmarked = saved.some(p => p.id === pokemon.id);
+  if (alreadyBookmarked) {
+    alert('Already bookmarked!');
+    return;
+  }
+
+  const newBookmarks = [...saved, {
+    id: pokemon.id,
+    name: pokemon.name,
+    sprite: pokemon.sprites.front_default
+  }];
+
+  localStorage.setItem('bookmarkedPokemons', JSON.stringify(newBookmarks));
+  alert(`${pokemon.name} bookmarked!`);
+};
 
   return (
     <div style={{

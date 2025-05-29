@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import PokeInfo from './PokeInfo';
+import PokeInfo from '../components/PokeInfo';
 
 function Dashboard() {
   const [pokemons, setPokemons] = useState([]);
