@@ -41,3 +41,8 @@ nav a:hover {
 body {
   padding-top: 60px;
 }
+
+.active-link {
+  background: rgba(255,255,255,0.3);
+  color: #fff;
+}

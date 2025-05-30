@@ -7,22 +7,26 @@ import Contact from './pages/Contact';
 import Bookmark from './pages/Bookmark';
 import PokeInfo from './components/PokeInfo';
 import Navbar from './components/Navbar';
+import LoginProvider from './context/logincontext';
 
 
 
 function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/bookmark" element={<Bookmark />} />
-        <Route path="/pokemon/:id" element={<PokeInfo />} />
-      </Routes>
-    </BrowserRouter>
+    <LoginProvider>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/bookmark" element={<Bookmark />} />
+          <Route path="/pokemon/:id" element={<PokeInfo />} />
+        </Routes>
+      </BrowserRouter>
+    </LoginProvider>
+    
   )
 }
 

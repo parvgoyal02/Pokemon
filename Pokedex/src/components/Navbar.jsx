@@ -1,19 +1,50 @@
 import React from "react";
 import './Navbar.css';
+import { Link, NavLink } from 'react-router-dom';
+import { useLoginContext } from "../context/logincontext";
+import { useNavigate } from "react-router-dom";
 
 function Navbar(){
-    return(
+    const { isLoggedIn, logout } = useLoginContext();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
+
+    return (
         <nav>
-            <ul>
-                <li><a href="/">Dashboard</a></li>
-                <li><a href="/Bookmark">Bookmark</a></li>
-                <li><a href="/login">Login</a></li>
-                <li><a href="/signup">Signup</a></li>
-                <li><a href="/contact">Contact</a></li>
-                
-            </ul>
+        <ul>
+            <li>
+            <NavLink to="/" className={({ isActive }) => isActive ? "active-link" : ""}>Dashboard</NavLink>
+            </li>
+            
+            {isLoggedIn ? (
+            <>
+                <li>
+                <NavLink to="/bookmark" className={({ isActive }) => isActive ? "active-link" : ""}>Bookmark</NavLink>
+                </li>
+                <li>
+                <button onClick={handleLogout}>Logout</button>
+                </li>
+            </>
+            ) : (
+            <>
+                <li>
+                <NavLink to="/login" className={({ isActive }) => isActive ? "active-link" : ""}>Login</NavLink>
+                </li>
+                <li>
+                <NavLink to="/signup" className={({ isActive }) => isActive ? "active-link" : ""}>Signup</NavLink>
+                </li>
+            </>
+            )}
+
+            <li>
+            <NavLink to="/contact" className={({ isActive }) => isActive ? "active-link" : ""}>Contact</NavLink>
+            </li>
+        </ul>
         </nav>
     );
 }
-
 export default Navbar;
