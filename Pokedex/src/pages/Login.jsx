@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useLoginContext } from "../context/logincontext";
+import Modal from "../components/modal";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -8,6 +9,7 @@ function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useLoginContext();
+  const [modalMsg, setModalMsg] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -21,9 +23,12 @@ function Login() {
       return;
     }
 
-    alert("Successfully logged in");
-    login(user); // Update context
-    navigate('/'); // Go to dashboard
+    login(user);
+    setModalMsg("Successfully logged in!");
+  };
+  const closeModal = () => {
+    setModalMsg("");
+    navigate('/');
   };
 
   return (
@@ -52,6 +57,7 @@ function Login() {
         <button type="submit">Login</button>
         <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
       </form>
+      {modalMsg && <Modal message={modalMsg} onClose={closeModal} />}
     </div>
   );
 }

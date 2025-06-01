@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Modal from "../components/modal"; 
 
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+  const [modalMsg, setModalMsg] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      setModalMsg("Passwords do not match");
       return;
     }
 
@@ -19,15 +21,20 @@ function Signup() {
     const alreadyExists = users.find((user) => user.email === email);
 
     if (alreadyExists) {
-      alert("User with this email already exists");
+      setModalMsg("User with this email already exists");
       return;
     }
 
     users.push({ email, password });
     localStorage.setItem("users", JSON.stringify(users));
-    alert("Successfully signed up. Proceed to login.");
-    navigate("/login");
+    setModalMsg("Successfully signed up. Proceed to login.");
   };
+    const closeModal = () => {
+    setModalMsg("");
+    if (modalMsg.includes("Successfully")) {
+      navigate("/login");
+    }
+};
 
   return (
     <div>
@@ -68,6 +75,7 @@ function Signup() {
           Already have an account? <Link to="/login">Login</Link>
         </p>
       </form>
+      {modalMsg && <Modal message={modalMsg} onClose={closeModal} />}
     </div>
   );
 }
