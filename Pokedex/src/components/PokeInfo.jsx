@@ -28,7 +28,10 @@ function PokeInfo({ pokemon }) {
 
   localStorage.setItem('bookmarkedPokemons', JSON.stringify(newBookmarks));
   alert(`${pokemon.name} bookmarked!`);
-};
+  };
+  const handleViewDetails = () => {
+      navigate(`/pokemon/${pokemon.name}`);
+  };
 
   return (
     <div style={{
@@ -36,13 +39,23 @@ function PokeInfo({ pokemon }) {
       borderRadius: '10px',
       padding: '10px',
       width: '160px',
-      textAlign: 'center'
-    }}>
+      textAlign: 'center',
+      cursor: 'pointer',
+    }}
+    onClick={handleViewDetails}
+    >
       <h4 style={{ textTransform: 'capitalize' }}>{pokemon.name}</h4>
       <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-      <button onClick={handleBookmark} style={{ marginTop: '10px' }}>
-        Bookmark
-      </button>
+      <div style={{ marginTop: '10px' }}>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleBookmark();
+          }}
+        >
+          Bookmark
+        </button>
+      </div>
     </div>
   );
 }

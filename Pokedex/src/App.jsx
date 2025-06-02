@@ -8,6 +8,7 @@ import Bookmark from './pages/Bookmark';
 import PokeInfo from './components/PokeInfo';
 import Navbar from './components/Navbar';
 import LoginProvider from './context/logincontext';
+import PokemonDetail from './pages/PokemonDetail';
 
 
 
@@ -22,7 +23,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/bookmark" element={<Bookmark />} />
-          <Route path="/pokemon/:id" element={<PokeInfo />} />
+          {/* <Route path="/pokemon/:id" element={<PokeInfo />} /> */}
+          <Route path="/pokemon/:name" element={<PokemonDetail />} />
         </Routes>
       </BrowserRouter>
     </LoginProvider>
