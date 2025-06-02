@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Modal from "../components/modal"; 
+import { useForm } from "react-hook-form";
 
 function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors }
+  } = useForm();
   const navigate = useNavigate();
   const [modalMsg, setModalMsg] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (data) => {
+    const { email, password, confirmPassword } = data;
 
     if (password !== confirmPassword) {
       setModalMsg("Passwords do not match");
@@ -39,35 +43,40 @@ function Signup() {
   return (
     <div>
       <h2>Signup Page</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label>Email</label>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            {...register("email", { required: "Email is required" })}
           />
+          {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
         </div>
 
         <div>
           <label>Password</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters"
+              }
+            })}
           />
+          {errors.password && <p style={{ color: "red" }}>{errors.password.message}</p>}
         </div>
 
         <div>
           <label>Confirm Password</label>
           <input
             type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
+            {...register("confirmPassword", {
+              required: "Please confirm your password"
+            })}
           />
+          {errors.confirmPassword && <p style={{ color: "red" }}>{errors.confirmPassword.message}</p>}
         </div>
 
         <button type="submit">Sign Up</button>
