@@ -2,20 +2,19 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useLoginContext } from "../context/logincontext";
 import Modal from "../components/modal";
+import { useForm } from "react-hook-form";
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useLoginContext();
   const [modalMsg, setModalMsg] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const onSubmit = (data) => {
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const user = users.find(
-      (u) => u.email === username && u.password === password
+      (u) => u.email === data.email && u.password === data.password
     );
 
     if (!user) {
@@ -34,24 +33,28 @@ function Login() {
   return (
     <div>
       <h2>Login Page</h2>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label>Email</label>
           <input
             type="email"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
+            {...register("email", { required: "Email is required" })}
           />
+          {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
         </div>
         <div>
           <label>Password</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters long"
+              }
+            })}
           />
+          {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
         </div>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit">Login</button>
