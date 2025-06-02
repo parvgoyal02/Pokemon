@@ -24,14 +24,17 @@ function BookmarkPage() {
         <p>No bookmarked Pokemon.</p>
       ) : (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-          {bookmarked.map(pokemon => (
-            <div key={pokemon.id} style={{
-              border: '1px solid #ccc',
-              borderRadius: '10px',
-              padding: '10px',
-              width: '160px',
-              textAlign: 'center'
-            }}>
+          {bookmarked.map((pokemon, idx) => (
+            <div
+              key={pokemon.id || idx}
+              style={{
+                border: '1px solid #ccc',
+                borderRadius: '10px',
+                padding: '10px',
+                width: '160px',
+                textAlign: 'center'
+              }}
+            >
               <h4 style={{ textTransform: 'capitalize' }}>{pokemon.name}</h4>
               <img src={pokemon.sprite} alt={pokemon.name} />
             </div>
