@@ -23,9 +23,6 @@ function Navbar(){
             {isLoggedIn ? (
             <>
                 <li>
-                <NavLink to="/bookmark" className={({ isActive }) => isActive ? "active-link" : ""}>Bookmark</NavLink>
-                </li>
-                <li>
                 <button onClick={handleLogout}>Logout</button>
                 </li>
             </>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PokeInfo from '../components/PokeInfo';
+import BookmarkPage from './Bookmark';
 
 function Dashboard() {
   const [pokemons, setPokemons] = useState([]);
@@ -26,21 +27,25 @@ function Dashboard() {
   );
 
   return (
-    <div>
-      <h1>Pokemon Dashboard</h1>
-      <input
-        type="text"
-        placeholder="Search Pokémon"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ padding: '8px', marginBottom: '20px', width: '200px' }}
-      />
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-        {filtered.map(pokemon => (
-          <PokeInfo key={pokemon.id} pokemon={pokemon} />
-        ))}
+    <div style={{ display: 'flex', padding: '20px' }}>
+      <div style={{ flex: 2 }}>
+        <h1>Pokemon Dashboard</h1>
+        <input
+          type="text"
+          placeholder="Search Pokémon"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ padding: '8px', marginBottom: '20px', width: '200px' }}
+        />
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+          {filtered.map(pokemon => (
+            <PokeInfo key={pokemon.id} pokemon={pokemon} />
+          ))}
+        </div>
       </div>
+        <BookmarkPage />
     </div>
+    
   );
 }
 

@@ -5,14 +5,16 @@ function PokeInfo({ pokemon }) {
   const navigate = useNavigate();
 
   const handleBookmark = () => {
-  const loggedInUser = localStorage.getItem('loggedInUser');
-  if (!loggedInUser) {
+  const userRaw = localStorage.getItem('loggedInUser');
+  if (!userRaw) {
     alert('Please log in to bookmark Pokémon.');
     navigate('/login');
     return;
   }
+  const loggedInUser = JSON.parse(userRaw);
+  const key = `bookmarkedPokemons_${loggedInUser.email}`;
 
-  const saved = JSON.parse(localStorage.getItem('bookmarkedPokemons')) || [];
+  const saved = JSON.parse(localStorage.getItem(key)) || [];
 
   const alreadyBookmarked = saved.some(p => p.id === pokemon.id);
   if (alreadyBookmarked) {
@@ -20,14 +22,15 @@ function PokeInfo({ pokemon }) {
     return;
   }
 
+
   const newBookmarks = [...saved, {
     id: pokemon.id,
     name: pokemon.name,
     sprite: pokemon.sprites.front_default
   }];
 
-  localStorage.setItem('bookmarkedPokemons', JSON.stringify(newBookmarks));
-  alert(`${pokemon.name} bookmarked!`);
+  localStorage.setItem(key, JSON.stringify(newBookmarks));
+  window.dispatchEvent(new Event("bookmarksUpdated"));
   };
   const handleViewDetails = () => {
       navigate(`/pokemon/${pokemon.name}`);
